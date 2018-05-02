@@ -16,4 +16,5 @@ use Illuminate\Http\Request;
 Route::get('mahasiswas', 'MahasiswaController@mahasiswas');
 Route::post('auth/register', 'AuthController@register');
 Route::post('auth/login', 'AuthController@login');
-Route::get('mahasiswas/profil', 'MahasiswaController@profil');
+Route::post('login', 'AuthController@login');
+Route::get('mahasiswas/profil', 'MahasiswaController@profil')->middleware('auth:api');
