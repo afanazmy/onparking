@@ -18,3 +18,4 @@ Route::post('auth/register', 'AuthController@register');
 Route::post('auth/login', 'AuthController@login');
 Route::post('login', 'AuthController@login');
 Route::get('mahasiswas/profil', 'MahasiswaController@profil')->middleware('auth:api');
+Route::post('kendaraan', 'KendaraanController@tambah')->middleware('auth:api');
