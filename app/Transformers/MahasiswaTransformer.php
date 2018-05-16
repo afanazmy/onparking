@@ -3,6 +3,8 @@
 namespace App\Transformers;
 
 use App\Mahasiswa;
+use App\User;
+use App\Transformers\KendaraanTransformer;
 use League\Fractal\TransformerAbstract;
 
 class MahasiswaTransformer extends TransformerAbstract
@@ -12,6 +14,10 @@ class MahasiswaTransformer extends TransformerAbstract
      *
      * @return array
      */
+
+    protected $availableIncludes = [
+        'kendaraans'
+    ];
     public function transform(Mahasiswa $mahasiswa)
     {
         return [
@@ -21,5 +27,11 @@ class MahasiswaTransformer extends TransformerAbstract
             'prodi'       => $mahasiswa->prodi,
             'registered'  => $mahasiswa->created_at->diffForHumans(),
         ];
+    }
+
+    public function includeKendaraan()
+    {
+        $kendaraans = $mahasiswa->kendaraan;
+        return $this->collection($kendaraans, new KendaraanTransformer);
     }
 }

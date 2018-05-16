@@ -13,9 +13,10 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('mahasiswas', 'MahasiswaController@mahasiswas');
-Route::post('auth/register', 'AuthController@register');
-Route::post('auth/login', 'AuthController@login');
-Route::post('login', 'AuthController@login');
-Route::get('mahasiswas/profil', 'MahasiswaController@profil')->middleware('auth:api');
-Route::post('kendaraan', 'KendaraanController@tambah')->middleware('auth:api');
+Route::get('students', 'StudentController@students');
+Route::post('auth/student/register', 'AuthController@studentRegister');
+Route::post('auth/operator/register', 'AuthController@operatorRegister');
+Route::post('auth/login', 'AuthController@Login');
+Route::get('users', 'UserController@users');
+Route::get('student/profile', 'UserController@studentProfile')->middleware('auth:api');
+Route::get('operator/profile', 'UserController@operatorProfile')->middleware('auth:api');

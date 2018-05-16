@@ -45,6 +45,16 @@ return [
             'driver' => 'token',
             'provider' => 'users',
         ],
+
+        // 'apiStudent' => [
+        //     'driver' => 'token',
+        //     'provider' => 'students',
+        // ],
+
+        // 'apiOperator' => [
+        //     'driver' => 'token',
+        //     'provider' => 'operators',
+        // ],
     ],
 
     /*
@@ -70,10 +80,20 @@ return [
             'model' => App\User::class,
         ],
 
-         'users' => [
-             'driver' => 'database',
-             'table' => 'mahasiswas',
-        ],
+        //  'users' => [
+        //      'driver' => 'database',
+        //      'table' => 'students',
+        // ],
+
+        // 'students' => [
+        //     'driver' => 'eloquent',
+        //     'model' => App\Student::class,
+        // ],
+
+        // 'operators' => [
+        //     'driver' => 'eloquent',
+        //     'model' => App\Operator::class,
+        // ],
     ],
 
     /*

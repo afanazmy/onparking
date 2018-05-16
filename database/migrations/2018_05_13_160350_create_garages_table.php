@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateMahasiswasAddRememberToken extends Migration
+class CreateGaragesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,12 @@ class UpdateMahasiswasAddRememberToken extends Migration
      */
     public function up()
     {
-        Schema::table('mahasiswas', function(Blueprint $table) {
-          $table->string('api_token')->after('email');
+        Schema::create('garages', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->integer('capacity');
+            $table->integer('used');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +29,6 @@ class UpdateMahasiswasAddRememberToken extends Migration
      */
     public function down()
     {
-      Schema::table('mahasiswas', function(Blueprint $table) {
-        $table->string('api_token')->after('email');
-      }); 
+        Schema::dropIfExists('garages');
     }
 }

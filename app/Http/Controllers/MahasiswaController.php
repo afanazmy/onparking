@@ -28,6 +28,7 @@ class MahasiswaController extends Controller
         return fractal()
             ->item($mahasiswa)
             ->transformWith(new MahasiswaTransformer)
+            ->includeKendaraan()
             ->toArray();
     }
 }
