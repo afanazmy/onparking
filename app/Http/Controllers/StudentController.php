@@ -24,6 +24,21 @@ class StudentController extends Controller
 
     public function update(Request $request, Student $student)
     {
-        
+        $this->validate($request, [
+            'name'      => 'required',
+            'nif'       => 'required|size:5',
+
+        ]);
+
+        $student->name      = $request->get('name', $student->name);
+        $student->nif       = $request->get('nif', $student->nif);
+        $student->majors    = $request->get('majors', $student->majors);
+        $student->user_id   = Auth::user()->id;
+        $student->save();
+
+        return fractal()
+            ->item($post)
+            ->transformWith(new StudentTransformer)
+            ->toArray();
     }
 }
