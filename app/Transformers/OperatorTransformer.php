@@ -16,6 +16,7 @@ class OperatorTransformer extends TransformerAbstract
     {
         return [
             'id'                =>  $operator->id,
+            'name'              =>  $operator->name,
             'operator_number'   =>  $operator->operator_number,
             'registered'        =>  $operator->created_at->diffForHumans(),
         ];

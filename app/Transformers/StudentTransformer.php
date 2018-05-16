@@ -17,6 +17,7 @@ class StudentTransformer extends TransformerAbstract
     {
         return [
             'id'        =>  $student->id,
+            'name'      =>  $student->name,
             'nif'       =>  $student->nif,
             'majors'    =>  $student->majors,
             'registered'=>  $student->created_at->diffForHumans(),

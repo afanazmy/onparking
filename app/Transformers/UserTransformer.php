@@ -11,7 +11,7 @@ use App\Transformers\OperatorTransformer;
 class UserTransformer extends TransformerAbstract
 {
     protected $availableIncludes = [
-        'student', 'operator',
+        'student', 'operator', 'vehicle',
     ];
 
     /**
@@ -23,7 +23,6 @@ class UserTransformer extends TransformerAbstract
     {
         return [
             'id'        => $user->id,
-            'name'      => $user->name,
             'email'     => $user->email,
         ];
     }

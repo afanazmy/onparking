@@ -16,6 +16,7 @@ class CreateOperatorsTable extends Migration
         Schema::create('operators', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
+            $table->string('name');
             $table->integer('operator_number')->unsigned()->unique();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');

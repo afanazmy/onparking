@@ -11,7 +11,7 @@ class Operator extends Authenticatable
     use Notifiable;
 
     protected $fillable = [
-        'operator_number', 'user_id',
+        'name', 'operator_number', 'user_id',
     ];
 
     public function user()

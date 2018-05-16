@@ -20,3 +20,4 @@ Route::post('auth/login', 'AuthController@Login');
 Route::get('users', 'UserController@users');
 Route::get('student/profile', 'UserController@studentProfile')->middleware('auth:api');
 Route::get('operator/profile', 'UserController@operatorProfile')->middleware('auth:api');
+Route::put('student/profile/{id}', 'StudentController@update')->middleware('auth:api');

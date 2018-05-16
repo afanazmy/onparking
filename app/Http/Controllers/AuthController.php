@@ -25,16 +25,18 @@ class AuthController extends Controller
         ]);
 
         $user = $user->create([
-            'name'           => $request->name,
             'email'          => $request->email,
             'password'       => bcrypt($request->password),
             'as'             => "Student",
             'api_token'      => bcrypt($request->email),
         ]);
 
-        $userRegister = DB::table('users')->where('name', $request->name)->first();
+        $userRegister = DB::table('users')
+            ->where('email', $request->email)
+            ->first();
 
         $student = $student->create([
+            'name'      => $request->name,
             'nif'       => $request->nif,
             'majors'    => $request->majors,
             'user_id'   => $userRegister->id
@@ -61,16 +63,18 @@ class AuthController extends Controller
         ]);
 
         $user = $user->create([
-            'name'           => $request->name,
             'email'          => $request->email,
             'password'       => bcrypt($request->password),
             'as'             => "Operator",
             'api_token'      => bcrypt($request->email),
         ]);
 
-        $userRegister = DB::table('users')->where('name', $request->name)->first();
+        $userRegister = DB::table('users')
+            ->where('email', $request->email)
+            ->first();
 
         $operator = $operator->create([
+            'name'                  => $request->name,
             'operator_number'       => $request->operator_number,
             'user_id'               => $userRegister->id
         ]);
@@ -88,8 +92,13 @@ class AuthController extends Controller
 
     public function Login(Request $request, User $user)
     {
-        if (!Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            return response()->json(['error' => 'Your credential is wrong'], 401);
+        if (!Auth::attempt([
+            'email'     => $request->email,
+            'password'  => $request->password
+            ])
+        ) {
+            return response()
+                ->json(['error' => 'Your credential is wrong'], 401);
         }
 
         $user = $user->find(Auth::user()->id);
