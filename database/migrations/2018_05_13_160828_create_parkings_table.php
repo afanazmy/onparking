@@ -15,14 +15,12 @@ class CreateParkingsTable extends Migration
     {
         Schema::create('parkings', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('student_id')->unsigned();
             $table->string('license_plate')->unique();
-            $table->integer('operator_id')->unsigned();
+            $table->integer('user_id')->unsigned();
             $table->integer('garage_id')->unsigned();
             $table->timestamps();
-            $table->foreign('student_id')->references('id')->on('students');
             $table->foreign('license_plate')->references('license_plate')->on('vehicles');
-            $table->foreign('operator_id')->references('id')->on('operators');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('garage_id')->references('id')->on('garages');
         });
     }

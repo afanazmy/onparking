@@ -15,13 +15,13 @@ class CreateVehiclesTable extends Migration
     {
         Schema::create('vehicles', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('student_id')->unsigned();
+            $table->integer('user_id')->unsigned();
             $table->string('license_plate')->unique();
             $table->enum('kind', ['Motor', 'Mobil']);
             $table->string('brand');
             $table->string('type');
             $table->timestamps();
-            $table->foreign('student_id')->references('id')->on('students');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

@@ -17,7 +17,13 @@ Route::get('students', 'StudentController@students');
 Route::post('auth/student/register', 'AuthController@studentRegister');
 Route::post('auth/operator/register', 'AuthController@operatorRegister');
 Route::post('auth/login', 'AuthController@Login');
+
 Route::get('users', 'UserController@users');
+
 Route::get('student/profile', 'UserController@studentProfile')->middleware('auth:api');
 Route::get('operator/profile', 'UserController@operatorProfile')->middleware('auth:api');
-Route::put('student/profile/{id}', 'StudentController@update')->middleware('auth:api');
+
+Route::put('student/profile/update/{student}', 'StudentController@update')->middleware('auth:api');
+Route::put('operator/profile/update/{operator}', 'OperatorController@update')->middleware('auth:api');
+
+Route::post('student/vehicle/add', 'VehicleController@add')->middleware('auth:api');

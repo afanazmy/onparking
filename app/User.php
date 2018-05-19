@@ -6,6 +6,8 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Student;
 use App\Operator;
+use App\Vehicle;
+use Auth;
 
 class User extends Authenticatable
 {
@@ -37,5 +39,25 @@ class User extends Authenticatable
     public function operator()
     {
         return $this->hasOne(Operator::class);
+    }
+
+    public function vehicle()
+    {
+        return $this->hasOne(Vehicle::class);
+    }
+
+    public function ownStudent(Student $student)
+    {
+        return Auth::user()->id == $student->user->id;
+    }
+
+    public function ownOperator(Operator $operator)
+    {
+        return Auth::user()->id == $operator->user->id;
+    }
+
+    public function ownVehicle(Vehicle $vehicle)
+    {
+        return Auth::user()->id == $vehicle->user->id;
     }
 }

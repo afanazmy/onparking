@@ -7,11 +7,12 @@ use App\User;
 use App\Student;
 use App\Transformers\StudentTransformer;
 use App\Transformers\OperatorTransformer;
+use App\Transformers\VehicleTransformer;
 
 class UserTransformer extends TransformerAbstract
 {
     protected $availableIncludes = [
-        'student', 'operator', 'vehicle',
+        'student', 'operator', 'vehicle'
     ];
 
     /**
@@ -40,4 +41,12 @@ class UserTransformer extends TransformerAbstract
 
         return $this->item($operator, new OperatorTransformer);
     }
+
+    public function includeVehicle(User $user)
+    {
+        $vehicle = $user->vehicle;
+
+        return $this->item($vehicle, new VehicleTransformer);
+    }
+
 }

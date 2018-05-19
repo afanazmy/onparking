@@ -3,7 +3,7 @@
 namespace App\Transformers;
 
 use League\Fractal\TransformerAbstract;
-use Vehicle;
+use App\Vehicle;
 
 class VehicleTransformer extends TransformerAbstract
 {
@@ -16,7 +16,7 @@ class VehicleTransformer extends TransformerAbstract
     {
         return [
             'id'            =>  $vehicle->id,
-            'license_plate' =>  $vehicle->lisence_plate,
+            'license_plate' =>  $vehicle->license_plate,
             'kind'          =>  $vehicle->kind,
             'brand'         =>  $vehicle->brand,
             'type'          =>  $vehicle->type,

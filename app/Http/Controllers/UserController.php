@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\Transformers\UserTransformer;
 use App\User;
 use Auth;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -24,11 +25,25 @@ class UserController extends Controller
     {
         $user = $user->find(Auth::user()->id);
 
-        return fractal()
-            ->item($user)
-            ->transformWith(new UserTransformer)
-            ->includeStudent()
-            ->toArray();
+        $hasVehicle = DB::table('vehicles')
+            ->where('user_id', $user->id)
+            ->exists();
+
+        if ($hasVehicle == true) {
+            return fractal()
+                ->item($user)
+                ->transformWith(new UserTransformer)
+                ->includeStudent()
+                ->includeVehicle()
+                ->toArray();
+        } else {
+            return fractal()
+                ->item($user)
+                ->transformWith(new UserTransformer)
+                ->includeStudent()
+                ->toArray();
+        }
+
     }
 
     public function operatorProfile(User $user)

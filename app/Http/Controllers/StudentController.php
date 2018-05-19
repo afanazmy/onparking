@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Student;
 use App\User;
+use App\Vehicle;
+use App\Transformers\VehicleTransformer;
 use App\Transformers\StudentTransformer;
 use Auth;
 use Illuminate\Support\Facades\DB;
@@ -24,10 +26,14 @@ class StudentController extends Controller
 
     public function update(Request $request, Student $student)
     {
+        //dd($student);
+
+        $this->authorize('updateStudent', $student);
+
         $this->validate($request, [
             'name'      => 'required',
-            'nif'       => 'required|size:5',
-
+            'nif'       => 'required',
+            'majors'    => 'required',
         ]);
 
         $student->name      = $request->get('name', $student->name);
@@ -37,8 +43,9 @@ class StudentController extends Controller
         $student->save();
 
         return fractal()
-            ->item($post)
+            ->item($student)
             ->transformWith(new StudentTransformer)
             ->toArray();
     }
+
 }
