@@ -27,3 +27,4 @@ Route::put('student/profile/update/{student}', 'StudentController@update')->midd
 Route::put('operator/profile/update/{operator}', 'OperatorController@update')->middleware('auth:api');
 
 Route::post('student/vehicle/add', 'VehicleController@add')->middleware('auth:api');
+Route::post('student/vehicle/update/{vehicle}', 'VehicleController@update')->middleware('auth:api');

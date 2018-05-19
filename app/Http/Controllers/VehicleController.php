@@ -13,7 +13,7 @@ class VehicleController extends Controller
     public function add(Request $request, Vehicle $vehicle)
     {
         $this->validate($request, [
-            'license_plate'     => 'required|min:8|unique:vehicles',
+            'license_plate'     => 'required|min:5|unique:vehicles',
             'kind'              => 'required',
             'brand'             => 'required',
             'type'              => 'required',
@@ -33,5 +33,31 @@ class VehicleController extends Controller
             ->toArray();
 
         return response()->json($response, 201);
+    }
+
+    public function update(Request $request, Vehicle $vehicle)
+    {
+        // dd($vehicle);
+
+        $this->authorize('updateVehicle', $vehicle);
+
+        $this->validate($request, [
+            'license_plate'      => 'required',
+            'kind'               => 'required',
+            'brand'              => 'required',
+            'type'               => 'required',
+        ]);
+
+        $vehicle->license_plate = $request->get('license_plate', $vehicle->license_plate);
+        $vehicle->kind          = $request->get('kind', $vehicle->kind);
+        $vehicle->brand         = $request->get('brand', $vehicle->brand);
+        $vehicle->type          = $request->get('type', $vehicle->type);
+        $vehicle->user_id       = Auth::user()->id;
+        $vehicle->save();
+
+        return fractal()
+            ->item($vehicle)
+            ->transformWith(new VehicleTransformer)
+            ->toArray();
     }
 }
