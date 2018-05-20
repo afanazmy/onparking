@@ -18,6 +18,7 @@ Route::get('students', 'StudentController@students');
 Route::get('operators', 'OperatorController@operators');
 Route::get('vehicles', 'VehicleController@vehicles');
 Route::get('garages', 'GarageController@garages');
+Route::get('parkings', 'ParkingController@parkings');
 
 Route::post('auth/student/register', 'AuthController@studentRegister');
 Route::post('auth/operator/register', 'AuthController@operatorRegister');
@@ -35,3 +36,5 @@ Route::put('student/vehicle/update/{vehicle}', 'VehicleController@update')->midd
 Route::post('operator/garage/add', 'GarageController@add')->middleware('auth:api');
 Route::put('operator/garage/update/{garage}', 'GarageController@update')->middleware('auth:api');
 Route::delete('operator/garage/delete/{garage}', 'GarageController@delete')->middleware('auth:api');
+
+Route::post('operator/parking/add', 'ParkingController@add')->middleware('auth:api');
