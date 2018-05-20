@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Garage extends Model
 {
     protected $fillable = [
-        'name', 'capacity', 'used',
+        'user_id', 'name', 'capacity',
     ];
 }

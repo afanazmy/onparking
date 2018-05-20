@@ -10,6 +10,16 @@ use App\Transformers\VehicleTransformer;
 
 class VehicleController extends Controller
 {
+    public function vehicles(Vehicle $vehicle)
+    {
+        $vehicles = $vehicle->all();
+
+        return fractal()
+            ->collection($vehicles)
+            ->transformWith(new VehicleTransformer)
+            ->toArray();
+    }
+
     public function add(Request $request, Vehicle $vehicle)
     {
         $this->validate($request, [

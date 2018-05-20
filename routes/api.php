@@ -13,12 +13,15 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::get('users', 'UserController@users');
 Route::get('students', 'StudentController@students');
+Route::get('operators', 'OperatorController@operators');
+Route::get('vehicles', 'VehicleController@vehicles');
+Route::get('garages', 'GarageController@garages');
+
 Route::post('auth/student/register', 'AuthController@studentRegister');
 Route::post('auth/operator/register', 'AuthController@operatorRegister');
 Route::post('auth/login', 'AuthController@Login');
-
-Route::get('users', 'UserController@users');
 
 Route::get('student/profile', 'UserController@studentProfile')->middleware('auth:api');
 Route::get('operator/profile', 'UserController@operatorProfile')->middleware('auth:api');
@@ -27,4 +30,8 @@ Route::put('student/profile/update/{student}', 'StudentController@update')->midd
 Route::put('operator/profile/update/{operator}', 'OperatorController@update')->middleware('auth:api');
 
 Route::post('student/vehicle/add', 'VehicleController@add')->middleware('auth:api');
-Route::post('student/vehicle/update/{vehicle}', 'VehicleController@update')->middleware('auth:api');
+Route::put('student/vehicle/update/{vehicle}', 'VehicleController@update')->middleware('auth:api');
+
+Route::post('operator/garage/add', 'GarageController@add')->middleware('auth:api');
+Route::put('operator/garage/update/{garage}', 'GarageController@update')->middleware('auth:api');
+Route::delete('operator/garage/delete/{garage}', 'GarageController@delete')->middleware('auth:api');

@@ -11,6 +11,16 @@ use Auth;
 
 class OperatorController extends Controller
 {
+    public function operators(Operator $operator)
+    {
+        $operators = $operator->all();
+
+        return fractal()
+            ->collection($operators)
+            ->transformWith(new OperatorTransformer)
+            ->toArray();
+    }
+
     public function update(Request $request, Operator $operator)
     {
         //dd($operator);
