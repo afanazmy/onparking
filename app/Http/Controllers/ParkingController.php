@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Parking;
+use App\User;
 use App\Transformers\ParkingTransformer;
 use Auth;
 use Illuminate\Support\Facades\DB;
@@ -14,11 +15,12 @@ class ParkingController extends Controller
     public function parkings(Parking $parking)
     {
         $parkings = $parking->all();
+        dd($parkings);
 
-        return fractal()
-            ->collection($parkings)
-            ->transformWith(new ParkingTransformer)
-            ->toArray();
+        // return fractal()
+        //     ->collection($parkings)
+        //     ->transformWith(new ParkingTransformer)
+        //     ->toArray();
     }
 
     public function add(Request $request, Parking $parking)
@@ -128,5 +130,47 @@ class ParkingController extends Controller
             return response()->json([
                 'message' => 'Unauthenticated.'], 401);
         }
+    }
+
+    public function student(Parking $parking, User $user)
+    {
+        $user = Auth::user()->id;
+
+        $vehicle_exist = DB::table('vehicles')
+            ->where('user_id', $user)
+            ->exists();
+
+        if($vehicle_exist == true) {
+            $vehicle = DB::table('vehicles')
+                ->where('user_id', $user)
+                ->first();
+
+            $parking_exist = DB::table('parkings')
+                ->where('license_plate', $vehicle->license_plate)
+                ->exists();
+
+            if ($parking_exist == true) {
+                $find_parking = DB::table('parkings')
+                    ->where('license_plate', $vehicle->license_plate)
+                    ->first();
+
+                $parking = $parking->find($find_parking->id);
+
+                return fractal()
+                    ->item($parking)
+                    ->transformWith(new ParkingTransformer)
+                    ->toArray();
+            } else {
+                return response()->json([
+                    'message'   => 'Not found.'
+                ], 404);
+            }
+        } else {
+            return response()->json([
+                'message'   => 'Not found.'
+            ], 404);
+        }
+
+
     }
 }

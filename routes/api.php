@@ -32,6 +32,7 @@ Route::put('operator/profile/update/{operator}', 'OperatorController@update')->m
 
 Route::post('student/vehicle/add', 'VehicleController@add')->middleware('auth:api');
 Route::put('student/vehicle/update/{vehicle}', 'VehicleController@update')->middleware('auth:api');
+Route::get('student/parking', 'ParkingController@student')->middleware('auth:api');
 
 Route::post('operator/garage/add', 'GarageController@add')->middleware('auth:api');
 Route::put('operator/garage/update/{garage}', 'GarageController@update')->middleware('auth:api');
