@@ -5,14 +5,17 @@ namespace App\Transformers;
 use League\Fractal\TransformerAbstract;
 use App\User;
 use App\Student;
+use App\Parking;
 use App\Transformers\StudentTransformer;
 use App\Transformers\OperatorTransformer;
 use App\Transformers\VehicleTransformer;
+use App\Transformers\ParkingTransformer;
+use Illuminate\Support\Facades\DB;
 
 class UserTransformer extends TransformerAbstract
 {
     protected $availableIncludes = [
-        'student', 'operator', 'vehicle'
+        'student', 'operator', 'vehicle', 'parking'
     ];
 
     /**
@@ -47,6 +50,13 @@ class UserTransformer extends TransformerAbstract
         $vehicle = $user->vehicle;
 
         return $this->item($vehicle, new VehicleTransformer);
+    }
+
+    public function includeParking(User $user)
+    {
+        $parking = $user->parking;
+
+        return $this->item($parking, new ParkingTransformer);
     }
 
 }

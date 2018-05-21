@@ -38,3 +38,8 @@ Route::put('operator/garage/update/{garage}', 'GarageController@update')->middle
 Route::delete('operator/garage/delete/{garage}', 'GarageController@delete')->middleware('auth:api');
 
 Route::post('operator/parking/add', 'ParkingController@add')->middleware('auth:api');
+Route::put('operator/parking/update/{parking}', 'ParkingController@update')->middleware('auth:api');
+Route::delete('operator/parking/delete/{parking}', 'ParkingController@delete')->middleware('auth:api');
+
+
+Route::get('test', 'UserController@includeVehicle')->middleware('auth:api');

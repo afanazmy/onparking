@@ -67,4 +67,66 @@ class ParkingController extends Controller
         }
 
     }
+
+    public function update(Request $request, Parking $parking)
+    {
+
+        $userIs = Auth::user()->as;
+
+        if($userIs == "Operator") {
+            $this->validate($request, [
+                'license_plate'       => 'required|min:5',
+                'garage_name'         => 'required',
+            ]);
+
+            $license_plate_exist = DB::table('vehicles')
+                                ->where('license_plate', $request->license_plate)
+                                ->exists();
+
+            $garage_exist = DB::table('garages')
+                            ->where('name', $request->garage_name)
+                            ->exists();
+
+            if($garage_exist == true && $license_plate_exist == true) {
+                $garage = DB::table('garages')
+                        ->where('name', $request->garage_name)
+                        ->first();
+
+                $parking->license_plate = $request->get('license_plate', $parking->license_plate);
+                $parking->user_id       = Auth::user()->id;
+                $parking->garage_id     = $garage->id;
+                $parking->save();
+
+                $response = fractal()
+                    ->item($parking)
+                    ->transformWith(new ParkingTransformer)
+                    ->toArray();
+
+                return response()->json($response, 201);
+            } else {
+                return response()->json([
+                    'message' => 'Data invalid.'], 422);
+            }
+
+        } else {
+            return response()->json([
+                'message' => 'Unauthenticated.'], 401);
+        }
+
+    }
+
+    public function delete(Parking $parking)
+    {
+        $userIs = Auth::user()->as;
+
+        if($userIs == "Operator") {
+            $parking->delete();
+
+            return response()->json([
+                'message' => 'Deleted.']);
+        } else {
+            return response()->json([
+                'message' => 'Unauthenticated.'], 401);
+        }
+    }
 }

@@ -35,6 +35,7 @@ class UserController extends Controller
                 ->transformWith(new UserTransformer)
                 ->includeStudent()
                 ->includeVehicle()
+                ->includeParking()
                 ->toArray();
         } else {
             return fractal()
