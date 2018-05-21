@@ -18,7 +18,7 @@ Route::get('students', 'StudentController@students');
 Route::get('operators', 'OperatorController@operators');
 Route::get('vehicles', 'VehicleController@vehicles');
 Route::get('garages', 'GarageController@garages');
-Route::get('parkings', 'ParkingController@parkings');
+Route::get('parkings', 'ParkingController@parkings')->middleware('auth:api');
 
 Route::post('auth/student/register', 'AuthController@studentRegister');
 Route::post('auth/operator/register', 'AuthController@operatorRegister');

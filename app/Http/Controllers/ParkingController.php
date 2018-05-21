@@ -14,13 +14,21 @@ class ParkingController extends Controller
 {
     public function parkings(Parking $parking)
     {
-        $parkings = $parking->all();
-        dd($parkings);
+        $userIs = Auth::user()->as;
 
-        // return fractal()
-        //     ->collection($parkings)
-        //     ->transformWith(new ParkingTransformer)
-        //     ->toArray();
+        if($userIs == "Operator") {
+            $parkings = $parking->all();
+
+            return fractal()
+                ->collection($parkings)
+                ->transformWith(new ParkingTransformer)
+                ->toArray();
+        } else {
+            return response()->json([
+                'message'   => "Unauthenticated."
+            ], 401);
+        }
+
     }
 
     public function add(Request $request, Parking $parking)
