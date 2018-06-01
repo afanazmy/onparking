@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Vehicle;
+use App\User;
 use App\Http\Requests;
 use Auth;
 use App\Transformers\VehicleTransformer;
+use Illuminate\Support\Facades\DB;
 
 class VehicleController extends Controller
 {
@@ -18,6 +20,32 @@ class VehicleController extends Controller
             ->collection($vehicles)
             ->transformWith(new VehicleTransformer)
             ->toArray();
+    }
+
+    public function vehicle(Vehicle $vehicle, User $user)
+    {
+        $user = Auth::user()->id;
+
+        $vehicle_exist = DB::table('vehicles')
+            ->where('user_id', $user)
+            ->exists();
+
+        if ($vehicle_exist == true) {
+            $find_vehicle = DB::table('vehicles')
+                ->where('user_id', $user)
+                ->first();
+
+            $vehicle = $vehicle->find($find_vehicle->id);
+
+            return fractal()
+                ->item($vehicle)
+                ->transformWith(new VehicleTransformer)
+                ->toArray();
+        } else {
+            return response()->json([
+                'message'   => 'Not found.'
+            ], 404);
+        }
     }
 
     public function add(Request $request, Vehicle $vehicle)
