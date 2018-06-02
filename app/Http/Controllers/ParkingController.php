@@ -162,11 +162,18 @@ class ParkingController extends Controller
                     ->where('license_plate', $vehicle->license_plate)
                     ->first();
 
+                $garage = DB::table('garages')
+                    ->where('id', $find_parking->garage_id)
+                    ->first();
+
                 $parking = $parking->find($find_parking->id);
 
                 return fractal()
                     ->item($parking)
                     ->transformWith(new ParkingTransformer)
+                    ->addMeta([
+                        'garage_name' => $garage->name,
+                    ])
                     ->toArray();
             } else {
                 return response()->json([
